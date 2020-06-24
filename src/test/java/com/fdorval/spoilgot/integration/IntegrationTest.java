@@ -47,6 +47,15 @@ public class IntegrationTest {
     }
 
     @Test
+    public void shouldReturn200ifOK() throws Exception {
+        for (int i = 1; i <= 8; i++ ) {
+            assertThat(this.restTemplate.getForEntity("http://localhost:" + port + "/characters?season=" + i,
+                    String.class).getStatusCode()).isEqualTo(HttpStatus.OK);
+        }
+       
+    }
+
+    @Test
     public void shouldReturn404ifWrongUrl() throws Exception {
         assertThat(this.restTemplate.getForEntity("http://localhost:" + port + "/kamoulox",
                 String.class).getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
