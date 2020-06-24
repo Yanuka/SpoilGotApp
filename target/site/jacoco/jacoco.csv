@@ -1,0 +1,17 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+spoilgot,com.fdorval.spoilgot,ServletInitializer,12,0,0,0,2,0,2,0,2,0
+spoilgot,com.fdorval.spoilgot,SpoilGotApplication,5,3,0,0,2,1,1,1,1,1
+spoilgot,com.fdorval.spoilgot.business,SpoilBusiness,7,122,1,15,2,25,1,14,0,7
+spoilgot,com.fdorval.spoilgot.config,FireBaseAccount,9,51,0,2,4,17,0,6,0,5
+spoilgot,com.fdorval.spoilgot.config,JsonMapperConfiguration,0,13,0,0,0,4,0,2,0,2
+spoilgot,com.fdorval.spoilgot.config,SpringFoxConfig,0,15,0,0,0,6,0,2,0,2
+spoilgot,com.fdorval.spoilgot.api,SpoilController,0,9,0,0,0,2,0,2,0,2
+spoilgot,com.fdorval.spoilgot.dao.model,GotCharacterBack,16,37,0,0,8,14,4,7,4,7
+spoilgot,com.fdorval.spoilgot.dao.model,Season,4,115,0,0,1,7,1,4,1,4
+spoilgot,com.fdorval.spoilgot.dao.stub,StubDaoImpl,0,43,0,0,0,7,0,2,0,2
+spoilgot,com.fdorval.spoilgot.util.exception,FunctionalException,36,0,0,0,9,0,5,0,5,0
+spoilgot,com.fdorval.spoilgot.util.exception,TechnicalException,36,0,0,0,9,0,5,0,5,0
+spoilgot,com.fdorval.spoilgot.api.model,GotCharacterFront,20,24,0,0,6,11,2,7,2,7
+spoilgot,com.fdorval.spoilgot.dao.impl,FireBaseDaoImpl.new ValueEventListener() {...},77,0,2,0,15,0,4,0,3,0
+spoilgot,com.fdorval.spoilgot.dao.impl,FireBaseDaoImpl,42,0,0,0,12,0,2,0,2,0
+spoilgot,com.fdorval.spoilgot.dao.impl,H2SQLDaoImpl,0,32,0,0,0,7,0,3,0,3

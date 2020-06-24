@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GotCharacterBack.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spoilgot</a> &gt; <a href="index.source.html" class="el_package">com.fdorval.spoilgot.dao.model</a> &gt; <span class="el_source">GotCharacterBack.java</span></div><h1>GotCharacterBack.java</h1><pre class="source lang-java linenums">package com.fdorval.spoilgot.dao.model;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+/**
+ * les données de la base firebase
+ *
+ * @author franc
+ */
+@Entity
+@Table(name = &quot;GOTCHARACTERBACK &quot;)
+public class GotCharacterBack {
+
+    /**
+     * name
+     */
+    String name;
+
+    /**
+     * id
+     */
+    @Id
+    Integer id;
+
+    /**
+     * tué par...
+     */
+    Integer killedby;
+
+    /**
+     * saison de la mort
+     */
+    @Enumerated(EnumType.STRING)
+
+    Season killedinseason;
+
+    /**
+     * constructeur
+     */
+<span class="fc" id="L42">    GotCharacterBack() {</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * constructeur
+     *
+     * @param id
+     * @param name
+     */
+    public GotCharacterBack(Integer id, String name) {
+<span class="fc" id="L52">        this(id, name, null, null);</span>
+<span class="fc" id="L53">    }</span>
+
+
+    /**
+     * constructeur
+     *
+     * @param id
+     * @param name
+     * @param killedinseason
+     * @param killedby
+     */
+    public GotCharacterBack(Integer id, String name, Season killedinseason, Integer killedby) {
+<span class="fc" id="L65">        super();</span>
+<span class="fc" id="L66">        this.name = name;</span>
+<span class="fc" id="L67">        this.id = id;</span>
+<span class="fc" id="L68">        this.killedby = killedby;</span>
+<span class="fc" id="L69">        this.killedinseason = killedinseason;</span>
+<span class="fc" id="L70">    }</span>
+
+    public String getName() {
+<span class="fc" id="L73">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="nc" id="L77">        this.name = name;</span>
+<span class="nc" id="L78">    }</span>
+
+    public Integer getId() {
+<span class="fc" id="L81">        return id;</span>
+    }
+
+    public void setId(Integer id) {
+<span class="nc" id="L85">        this.id = id;</span>
+<span class="nc" id="L86">    }</span>
+
+    public Integer getKilledby() {
+<span class="fc" id="L89">        return killedby;</span>
+    }
+
+    public void setKilledby(Integer killedby) {
+<span class="nc" id="L93">        this.killedby = killedby;</span>
+<span class="nc" id="L94">    }</span>
+
+    public Season getKilledinseason() {
+<span class="fc" id="L97">        return killedinseason;</span>
+    }
+
+    public void setKilledinseason(Season killedinseason) {
+<span class="nc" id="L101">        this.killedinseason = killedinseason;</span>
+<span class="nc" id="L102">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FireBaseDaoImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spoilgot</a> &gt; <a href="index.source.html" class="el_package">com.fdorval.spoilgot.dao.impl</a> &gt; <span class="el_source">FireBaseDaoImpl.java</span></div><h1>FireBaseDaoImpl.java</h1><pre class="source lang-java linenums">package com.fdorval.spoilgot.dao.impl;
+
+import com.fdorval.spoilgot.dao.model.GotCharacterBack;
+import com.fdorval.spoilgot.util.exception.TechnicalException;
+import com.google.firebase.database.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Semaphore;
+
+@Profile(&quot;disabled&quot;)
+@Repository
+<span class="nc" id="L19">public class FireBaseDaoImpl implements com.fdorval.spoilgot.dao.FireBaseDao {</span>
+
+<span class="nc" id="L21">    Logger LOG = LoggerFactory.getLogger(FireBaseDaoImpl.class);</span>
+
+    @Autowired
+    DatabaseReference firebaseDatabase;
+
+    @Override
+    @Cacheable(&quot;characters&quot;)
+    public List&lt;GotCharacterBack&gt; getCharacters() throws TechnicalException {
+<span class="nc" id="L29">        List&lt;GotCharacterBack&gt; result = new ArrayList&lt;GotCharacterBack&gt;();</span>
+
+<span class="nc" id="L31">        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();</span>
+
+        //beurk
+<span class="nc" id="L34">        final Semaphore semaphore = new Semaphore(0);</span>
+<span class="nc" id="L35">        ref.addValueEventListener(new ValueEventListener() {</span>
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                try {
+<span class="nc" id="L40">                    LOG.info(&quot;found {} characters&quot;, snapshot.child(&quot;characters&quot;).getChildrenCount());</span>
+<span class="nc" id="L41">                    String string = snapshot.toString();</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">                    for (DataSnapshot postSnapshot : snapshot.child(&quot;characters&quot;).getChildren()) {</span>
+<span class="nc" id="L44">                        GotCharacterBack character = postSnapshot.getValue(GotCharacterBack.class);</span>
+<span class="nc" id="L45">                        LOG.info(&quot;--&gt; &quot; + character.toString());</span>
+<span class="nc" id="L46">                        result.add(character);</span>
+<span class="nc" id="L47">                    }</span>
+<span class="nc" id="L48">                } catch (Exception e) {</span>
+<span class="nc" id="L49">                    LOG.error(&quot;erreur désérialisation&quot;, e);</span>
+                } finally {
+<span class="nc" id="L51">                    semaphore.release();</span>
+                }
+<span class="nc" id="L53">            }</span>
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+<span class="nc" id="L57">                LOG.error(&quot;appel firebase ko&quot;, error);</span>
+<span class="nc" id="L58">                semaphore.release();</span>
+
+
+<span class="nc" id="L61">            }</span>
+        });
+
+        try {
+<span class="nc" id="L65">            semaphore.acquire();</span>
+<span class="nc" id="L66">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L67">            LOG.error(&quot;aarg&quot;, e);</span>
+<span class="nc" id="L68">            TechnicalException.throwTechnicalException(&quot;aaaarg&quot;, e);</span>
+<span class="nc" id="L69">        }</span>
+<span class="nc" id="L70">        return result;</span>
+
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

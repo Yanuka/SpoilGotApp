@@ -1,0 +1,17 @@
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\business\SpoilBusiness.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\model\Season.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\config\FireBaseAccount.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\ServletInitializer.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\impl\H2SQLDaoImpl.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\config\JsonMapperConfiguration.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\util\exception\FunctionalException.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\api\SpoilController.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\impl\FireBaseDaoImpl.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\stub\StubDaoImpl.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\util\exception\TechnicalException.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\FireBaseDao.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\impl\GotCharacterRepository.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\api\model\GotCharacterFront.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\SpoilGotApplication.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\config\SpringFoxConfig.java
+c:\Users\Yanuka\Desktop\CICD\SpoilGotApp\src\main\java\com\fdorval\spoilgot\dao\model\GotCharacterBack.java

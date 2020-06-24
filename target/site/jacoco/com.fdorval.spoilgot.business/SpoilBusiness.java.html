@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpoilBusiness.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spoilgot</a> &gt; <a href="index.source.html" class="el_package">com.fdorval.spoilgot.business</a> &gt; <span class="el_source">SpoilBusiness.java</span></div><h1>SpoilBusiness.java</h1><pre class="source lang-java linenums">package com.fdorval.spoilgot.business;
+
+import com.fdorval.spoilgot.api.model.GotCharacterFront;
+import com.fdorval.spoilgot.dao.FireBaseDao;
+import com.fdorval.spoilgot.dao.model.GotCharacterBack;
+import com.fdorval.spoilgot.dao.model.Season;
+import com.fdorval.spoilgot.util.exception.TechnicalException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * là où est le métier
+ *
+ * @author franc
+ */
+@Service
+<span class="fc" id="L23">public class SpoilBusiness {</span>
+
+<span class="fc" id="L25">    Logger LOG = LoggerFactory.getLogger(SpoilBusiness.class);</span>
+
+    @Autowired
+    FireBaseDao fireBaseDao;
+
+
+    /**
+     * la liste des personages d'une saison
+     *
+     * @param season : la saison demandée
+     * @return
+     * @throws TechnicalException
+     */
+    public List&lt;GotCharacterFront&gt; getCharactersInSeason(Season season) throws TechnicalException {
+<span class="fc" id="L39">        List&lt;GotCharacterFront&gt; result = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L41">        List&lt;GotCharacterBack&gt; charactersFirebase = fireBaseDao.getCharacters();</span>
+
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        for (GotCharacterBack characterFirebase : charactersFirebase) {</span>
+
+            //si le personnage est mort avant la saison courante, on ne l'affiche pas
+<span class="fc bfc" id="L46" title="All 2 branches covered.">            if (!characterIsKilledBeforeSeason(characterFirebase, season)) {</span>
+
+                //on transforme l'objet firebase en objet &quot;front&quot;
+<span class="fc" id="L49">                GotCharacterFront characterFront = convertToCharacterFront(characterFirebase, season);</span>
+<span class="fc" id="L50">                result.add(characterFront);</span>
+            }
+<span class="fc" id="L52">        }</span>
+<span class="fc" id="L53">        return result;</span>
+    }
+
+
+    /**
+     * true si le personnage se fait tuer AVANT la saison en cours
+     *
+     * @param gotCharacterBack
+     * @param season
+     * @return
+     */
+    boolean characterIsKilledBeforeSeason(GotCharacterBack gotCharacterBack, Season season) {
+<span class="fc bfc" id="L65" title="All 2 branches covered.">        return gotCharacterBack.getKilledinseason() != null</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">                &amp;&amp; gotCharacterBack.getKilledinseason().getValue() &lt; season.getValue();</span>
+    }
+
+
+    /**
+     * true si le personnage se fait tuer PENDANT la saison en cours
+     *
+     * @param gotCharacterBack
+     * @param season
+     * @return
+     */
+    boolean characterIsKilledInSeason(GotCharacterBack gotCharacterBack, Season season) {
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        return gotCharacterBack.getKilledinseason() != null</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">                &amp;&amp; gotCharacterBack.getKilledinseason().getValue() == season.getValue();</span>
+    }
+
+
+    /**
+     * retourne un personnage en fonction de son id
+     *
+     * @param id
+     * @return
+     * @throws TechnicalException
+     */
+    GotCharacterBack findCharacteByID(Integer id) throws TechnicalException {
+<span class="fc" id="L91">        List&lt;GotCharacterBack&gt; charactersFirebase = fireBaseDao.getCharacters();</span>
+
+<span class="fc" id="L93">        Optional&lt;GotCharacterBack&gt; found = charactersFirebase.stream().filter(x -&gt; x.getId().equals(id)).findAny();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (found.isPresent()) {</span>
+<span class="fc" id="L95">            return found.get();</span>
+        }
+<span class="nc" id="L97">        LOG.warn(&quot;c'est pas normal... &quot; + id);</span>
+<span class="nc" id="L98">        return null;</span>
+    }
+
+
+    /**
+     * conversion personnage firebase -&gt; personnages front
+     *
+     * @param gotCharacterBack
+     * @param currentSeason
+     * @return
+     * @throws TechnicalException
+     */
+    public GotCharacterFront convertToCharacterFront(GotCharacterBack gotCharacterBack, Season currentSeason) throws TechnicalException {
+<span class="fc" id="L111">        GotCharacterFront result = new GotCharacterFront();</span>
+        //le nom
+<span class="fc" id="L113">        result.setName(gotCharacterBack.getName());</span>
+
+        //se fait-il tuer dans la saison en cours?
+<span class="fc" id="L116">        boolean deadInSeason = characterIsKilledInSeason(gotCharacterBack, currentSeason);</span>
+<span class="fc" id="L117">        result.setDeadInSeason(deadInSeason);</span>
+
+        //cause de la mort
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        if (deadInSeason) {</span>
+<span class="fc" id="L121">            result.setCauseOfDeath(&quot;killed by &quot; + findCharacteByID(gotCharacterBack.getKilledby()).getName());</span>
+        }
+<span class="fc" id="L123">        return result;</span>
+
+
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
